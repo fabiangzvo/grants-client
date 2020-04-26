@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled from '@emotion/styled';
 import { Header, PostList } from 'components';
-import { Layout } from 'layouts';
 
 const PostWrapper = styled.div`
   display: flex;
@@ -23,9 +22,9 @@ const PostWrapper = styled.div`
 const Index = ({ data }) => {
   const { edges } = data.allMarkdownRemark;
   return (
-    <Layout>
+    <>
       <Helmet title={'Home Page'} />
-      <Header title="Home Page">Gatsby Tutorial Starter</Header>
+      <Header title="Convenience Comes to Federal Grants">Find · Apply · Succeed</Header>
       <PostWrapper>
         {edges.map(({ node }) => {
           const { id, excerpt, frontmatter } = node;
@@ -42,7 +41,7 @@ const Index = ({ data }) => {
           );
         })}
       </PostWrapper>
-    </Layout>
+    </>
   );
 };
 

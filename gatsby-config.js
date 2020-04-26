@@ -61,5 +61,13 @@ module.exports = {
       },
     },
     'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `licimatic-api`,
+        fieldName: `licimatic-api`,
+        url: `http://localhost:5000/api/grants/`,
+      },
+    },
   ],
 };

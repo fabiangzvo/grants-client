@@ -2,8 +2,8 @@ import React from 'react';
 import { graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { Layout, Container, Content } from 'layouts';
-import { TagsBlock, Header, SEO } from 'components';
+import { Container, Content } from 'layouts';
+import { Header, SEO } from 'components';
 import '../styles/prism';
 
 const SuggestionBar = styled.div`
@@ -21,12 +21,12 @@ const PostSuggestion = styled.div`
 
 const Post = ({ data, pageContext }) => {
   const { next, prev } = pageContext;
-  const {html, frontmatter, excerpt } = data.markdownRemark
-  const {date, title, tags, path, description} = frontmatter
+  const { html, frontmatter, excerpt } = data.markdownRemark
+  const { date, title, tags, path, description } = frontmatter
   const image = frontmatter.cover.childImageSharp.fluid;
 
   return (
-    <Layout>
+    <>
       <SEO
         title={title}
         description={description || excerpt || ' '}
@@ -37,7 +37,6 @@ const Post = ({ data, pageContext }) => {
       <Header title={title} date={date} cover={image} />
       <Container>
         <Content input={html} />
-        <TagsBlock list={tags || []} />
       </Container>
       <SuggestionBar>
         <PostSuggestion>
@@ -57,7 +56,7 @@ const Post = ({ data, pageContext }) => {
           )}
         </PostSuggestion>
       </SuggestionBar>
-    </Layout>
+    </>
   );
 };
 

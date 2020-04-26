@@ -1,12 +1,38 @@
 const path = require('path');
+const fetch = require(`node-fetch`)
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
+  // get data from GitHub API at build time
+  const result = await fetch(`https://localhost:5000/api/grants`)
+  const { data, size } = await result.json()
+
+  data.map(() => {
+
+  })
+  // create node for build time data example in the docs
+  createNode({
+    // nameWithOwner and url are arbitrary fields from the data
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
+}
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
   return new Promise((resolve, reject) => {
     const postTemplate = path.resolve('src/templates/post.jsx');
-    const tagPage = path.resolve('src/pages/tags.jsx');
-    const tagPosts = path.resolve('src/templates/tag.jsx');
 
     resolve(
       graphql(
@@ -49,28 +75,6 @@ exports.createPages = ({ graphql, actions }) => {
         });
 
         const tags = Object.keys(postsByTag);
-
-        createPage({
-          path: '/tags',
-          component: tagPage,
-          context: {
-            tags: tags.sort(),
-          },
-        });
-
-        //create tags
-        tags.forEach(tagName => {
-          const posts = postsByTag[tagName];
-
-          createPage({
-            path: `/tags/${tagName}`,
-            component: tagPosts,
-            context: {
-              posts,
-              tagName,
-            },
-          });
-        });
 
         //create posts
         posts.forEach(({ node }, index) => {
