@@ -1,42 +1,65 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React, { useState } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import styled from '@emotion/styled';
-import { Header, PostList } from 'components';
+import { Header, PostList, Pagination } from 'components';
+import { PostWrapper, Wrapper } from "../styles/components";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
-const PostWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 4rem 4rem 1rem 4rem;
-  @media (max-width: 1000px) {
-    margin: 4rem 2rem 1rem 2rem;
-  }
-  @media (max-width: 700px) {
-    margin: 4rem 1rem 1rem 1rem;
-  }
-`;
 
-const Index = ({ data }) => {
-  const { edges } = data.allMarkdownRemark;
+const Index = () => {
+  //flags to get array parts
+  const [skip, setSkip] = useState(20)
+  const [offset, setOffset] = useState(0)
+
+  const { allGrants } = useStaticQuery(graphql`
+  query getGrants {
+    allGrants {
+    totalCount
+    edges{
+      node {
+        id
+        agencyName
+        postedDate
+        image
+        title
+      }
+    }
+  }
+}
+`);
+  /**
+   * @function handleChange
+   * Encharge of change the local states of variables
+   * offset and skip 
+   * 
+   * @param {Number} tabNumber 
+   */
+  const handleChange = (tabNumber) => {
+    setSkip(tabNumber * 20 - 1)
+    setOffset((tabNumber - 1) * 20)
+  }
+  const { edges } = allGrants;
+  //get part of array
+  const grants = edges.slice(offset, skip)
+
   return (
     <>
       <Helmet title={'Home Page'} />
-      <Header title="Convenience Comes to Federal Grants">Find · Apply · Succeed</Header>
+      <Header title="Convenience Comes to Federal Grants" >Find · Apply · Succeed</Header>
+      <div><Pagination next={MdNavigateNext} prev={MdNavigateBefore} change={handleChange} /></div>
       <PostWrapper>
-        {edges.map(({ node }) => {
-          const { id, excerpt, frontmatter } = node;
-          const { cover, path, title, date } = frontmatter;
+        {grants.map(({ node }) => {
+          const grant = node
+          const { id, title, postedDate, agencyName, image } = grant;
           return (
             <PostList
               key={id}
-              cover={cover.childImageSharp.fluid}
-              path={path}
+              image={image}
+              path={`grant/${id}`}
               title={title}
-              date={date}
-              excerpt={excerpt}
+              date={postedDate}
+              excerpt={agencyName}
             />
           );
         })}
@@ -68,35 +91,3 @@ Index.propTypes = {
   }),
 };
 
-export const query = graphql`
-  query {
-    allMarkdownRemark(
-      limit: 6
-      sort: { order: DESC, fields: [frontmatter___date] }
-    ) {
-      edges {
-        node {
-          id
-          excerpt(pruneLength: 75)
-          frontmatter {
-            title
-            path
-            tags
-            date(formatString: "MM.DD.YYYY")
-            cover {
-              childImageSharp {
-                fluid(
-                  maxWidth: 1000
-                  quality: 90
-                  traceSVG: { color: "#2B2B2F" }
-                ) {
-                  ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
