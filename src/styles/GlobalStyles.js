@@ -45,6 +45,33 @@ export const GlobalStyles = () => (
             font-family: ${theme.fontFamily.heading};
           }
 
+          .accordion {
+            margin-top: 1em;
+            transition: 260ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .accordion__toggle{
+            transition: min-height 260ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .accordion--is-closed + .accordion--is-open {
+            margin-top: 10px;
+          }
+          .accordion + .accordion {
+            .accordion__divider {
+              display: block;
+            }
+          }
+          .accordion--is-open + .accordion--is-closed {
+            .accordion__divider {
+              display: none;
+            }
+          }
+          
+          .collapse-css-transition {
+            transition: height 260ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .accordion--is-open > .accordion__toggle{
+            background:#F4FDFD;
+          }
           ${headroom}
         `}
   />
