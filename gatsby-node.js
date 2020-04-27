@@ -1,30 +1,52 @@
 const path = require('path');
 const fetch = require(`node-fetch`)
+const crypto = require('crypto');
 
 exports.sourceNodes = async ({
   actions: { createNode },
   createContentDigest,
 }) => {
-  // get data from GitHub API at build time
-  const result = await fetch(`https://localhost:5000/api/grants`)
+  // get data
+  const result = await fetch(`http://localhost:5000/api/grants`)
   const { data, size } = await result.json()
 
-  data.map(() => {
+  data.map((grant) => {
+    const grantNode = {
+      // Required fields
+      id: grant._id,
+      parent: `__SOURCE__`,
+      internal: {
+        type: `Grants`,
+      },
+      children: [],
+      title: grant.title,
+      postedDate: grant.postedDate,
+      agencyName: grant.agencyName,
+      image: grant.image,
+      category: grant.category,
+      cfda: grant.cfda,
+      matchingRequired: grant.matchingRequired,
+      dateDue: grant.dateDue,
+      totalFunding: grant.totalFunding,
+      awardCeiling: grant.awardCeiling,
+      awardFloor: grant.awardFloor,
+      applicants: grant.applicants,
+      eligibilityapplicants: grant.eligibilityapplicants,
+      informationEligibility: grant.informationEligibility,
+      opportunityNumber: grant.opportunityNumber,
+      agencyDescription: grant.agencyDescription,
+      agencyContact: grant.agencyContact
+    }
+    // Get content digest of node. (Required field)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(grantNode))
+      .digest(`hex`);
+    // add it to userNode
+    grantNode.internal.contentDigest = contentDigest;
 
-  })
-  // create node for build time data example in the docs
-  createNode({
-    // nameWithOwner and url are arbitrary fields from the data
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
-    // required fields
-    id: `example-build-time-data`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
+    // Create node with the gatsby createNode() API
+    createNode(grantNode);
   })
 }
 
@@ -37,56 +59,49 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(
         `
-          query {
-            allMarkdownRemark(
-              sort: { order: ASC, fields: [frontmatter___date] }
-            ) {
-              edges {
-                node {
-                  frontmatter {
-                    path
-                    title
-                    tags
-                  }
-                }
+        query grantsDetails{
+          allGrants {
+            edges {
+              node {
+                agencyContact
+                agencyDescription
+                agencyName
+                applicants
+                awardCeiling
+                awardFloor
+                category
+                cfda
+                dateDue
+                eligibilityapplicants
+                id
+                image
+                informationEligibility
+                matchingRequired
+                opportunityNumber
+                postedDate
+                title
               }
             }
           }
-        `
+        }        
+    `
       ).then(result => {
         if (result.errors) {
           return reject(result.errors);
         }
 
-        const posts = result.data.allMarkdownRemark.edges;
+        const grants = result.data.allGrants.edges;
 
-        const postsByTag = {};
-        // create tags page
-        posts.forEach(({ node }) => {
-          if (node.frontmatter.tags) {
-            node.frontmatter.tags.forEach(tag => {
-              if (!postsByTag[tag]) {
-                postsByTag[tag] = [];
-              }
-
-              postsByTag[tag].push(node);
-            });
-          }
-        });
-
-        const tags = Object.keys(postsByTag);
-
-        //create posts
-        posts.forEach(({ node }, index) => {
-          const path = node.frontmatter.path;
-          const prev = index === 0 ? null : posts[index - 1].node;
+        //create detail of grants
+        grants.forEach(({ node }, index) => {
+          const prev = index === 0 ? null : grants[index - 1].node;
           const next =
-            index === posts.length - 1 ? null : posts[index + 1].node;
+            index === grants.length - 1 ? null : grants[index + 1].node;
           createPage({
-            path,
+            path: `/grant/${node.id}/`,
             component: postTemplate,
             context: {
-              pathSlug: path,
+              grant: { ...node },
               prev,
               next,
             },
