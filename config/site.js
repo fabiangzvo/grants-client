@@ -3,15 +3,15 @@ module.exports = {
   title: 'Grants', // Navigation and Site Title
   titleAlt: 'Grants', // Title for JSONLD
   description: 'Find, apply and succeed grants',
-  url: 'https://gatsby-tutorial-starter.netlify.com', // Domain of your site. No trailing slash!
-  siteUrl: 'https://gatsby-tutorial-starter.netlify.com', // url + pathPrefix
+  url: '', // Domain of your site. No trailing slash!
+  siteUrl: '', // url + pathPrefix
   siteLanguage: 'en', // Language Tag on <html> element
-  logo: 'static/logo/logo.png', // Used for SEO
-  banner: 'static/logo/banner.png',
+  logo: 'static/logo/favicon.png', // Used for SEO
+  banner: 'static/logo/faviconr.png',
   // JSONLD / Manifest
   favicon: 'static/logo/favicon.png', // Used for manifest favicon generation
-  shortName: 'GatsbyTut', // shortname for manifest. MUST be shorter than 12 characters
-  author: 'Justin', // Author for schemaORGJSONLD
+  shortName: 'Grants', // shortname for manifest. MUST be shorter than 12 characters
+  author: '@fabiagzvo', // Author for schemaORGJSONLD
   themeColor: '#3e7bf2',
   backgroundColor: '#d3e0ff',
   twitter: '@justinformentin', // Twitter Username
