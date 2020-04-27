@@ -17,6 +17,12 @@ export const Footer = styled.footer`
     padding-bottom: 2rem;
     text-align: center;
     color: ${props => props.theme.colors.white.light};
+    > span {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:1em;
+    }
   }
 `;
 
@@ -113,4 +119,53 @@ flex: 1;
 @media (max-width: ${props => props.theme.breakpoints.s}) {
   width: 95%;
 }
+`;
+
+export const SuggestionBar = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items:center;
+  background: ${props => props.theme.colors.white.light};
+  box-shadow: ${props => props.theme.shadow.suggestion};
+`;
+export const PostSuggestion = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  margin: 1rem 3rem 1rem 3rem;
+  > a {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    color:inherit;
+    >h4{
+      margin:0;
+    }
+  }
+`;
+
+export const Wrapper = styled.div`
+  display:flex;
+  justify-content:${props => props.justify || "space-between"};
+  flex-wrap:wrap;
+  line-height:2em;
+  > span {
+    font-weight:bold;
+  }
+`;
+
+export const PostWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 4rem 4rem 1rem 4rem;
+  @media (max-width: 1000px) {
+    margin: 4rem 2rem 1rem 2rem;
+  }
+  @media (max-width: 700px) {
+    margin: 4rem 1rem 1rem 1rem;
+  }
 `;
