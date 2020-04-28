@@ -169,3 +169,15 @@ export const PostWrapper = styled.div`
     margin: 4rem 1rem 1rem 1rem;
   }
 `;
+
+export const Paginator = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:auto;
+  width:100%;
+  margin-top:2em;
+  > ul {
+    margin:0;
+  } 
+`
