@@ -7,13 +7,6 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-catch-links',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'posts',
-        path: `${__dirname}/content/posts`,
-      },
-    },
     'gatsby-transformer-sharp',
     {
       resolve: 'gatsby-transformer-remark',
@@ -68,6 +61,12 @@ module.exports = {
         fieldName: `licimatic-api`,
         url: `http://localhost:5000/api/grants/`,
       },
+    },
+    {
+      resolve: 'gatsby-plugin-node-reload',
+      options: {
+        watch: ['./components/Form/', './index.js']
+      }
     },
   ],
 };

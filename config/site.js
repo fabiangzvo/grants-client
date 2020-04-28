@@ -3,8 +3,8 @@ module.exports = {
   title: 'Grants', // Navigation and Site Title
   titleAlt: 'Grants', // Title for JSONLD
   description: 'Find, apply and succeed grants',
-  url: '', // Domain of your site. No trailing slash!
-  siteUrl: '', // url + pathPrefix
+  url: 'https://grants-licimatic.herokuapp.com/api/grants', // Domain of your site. No trailing slash!
+  siteUrl: 'https://grants-licimatic.herokuapp.com/api/grants', // url + pathPrefix
   siteLanguage: 'en', // Language Tag on <html> element
   logo: 'static/logo/favicon.png', // Used for SEO
   banner: 'static/logo/faviconr.png',

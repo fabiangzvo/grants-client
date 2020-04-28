@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Header, PostList, Pagination } from 'components';
-import { PostWrapper, Paginator } from "../styles/components";
+import { PostWrapper, Paginator, Wrapper } from "../styles/components";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 
@@ -47,7 +47,7 @@ const Index = () => {
     <>
       <Helmet title={'Home Page'} />
       <Header title="Convenience Comes to Federal Grants" >Find · Apply · Succeed</Header>
-      <Paginator><Pagination next={MdNavigateNext} prev={MdNavigateBefore} change={handleChange} /></Paginator>
+      <Wrapper justify='center' style={{ paddingTop: 20 }}><h2>find a grant for you, what are you waiting for?</h2></Wrapper>
       <PostWrapper>
         {grants.map(({ node }) => {
           const grant = node
@@ -64,6 +64,7 @@ const Index = () => {
           );
         })}
       </PostWrapper>
+      <Paginator><Pagination next={MdNavigateNext} prev={MdNavigateBefore} change={handleChange} /></Paginator>
     </>
   );
 };

@@ -35,7 +35,8 @@ exports.sourceNodes = async ({
       informationEligibility: grant.informationEligibility,
       opportunityNumber: grant.opportunityNumber,
       agencyDescription: grant.agencyDescription,
-      agencyContact: grant.agencyContact
+      agencyContact: grant.agencyContact,
+      idGrant: grant.idGrant,
     }
     // Get content digest of node. (Required field)
     const contentDigest = crypto
@@ -80,6 +81,7 @@ exports.createPages = ({ graphql, actions }) => {
                 opportunityNumber
                 postedDate
                 title
+                idGrant
               }
             }
           }

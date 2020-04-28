@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container as Wrapper } from "../styles/components";
 
-const Container = ({ children, type, className, center }) => (
-  <Wrapper className={className} type={type} center={center}>
+const Container = ({ children, width, type, className, center }) => (
+  <Wrapper width={width} className={className} type={type} center={center}>
     {children}
   </Wrapper>
 );

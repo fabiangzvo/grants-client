@@ -107,7 +107,7 @@ export const Container = styled.section`
 text-align: ${props => (props.center ? 'center' : '')};
 margin: auto;
 padding: 3rem 1.5rem;
-width: 60%;
+width: ${props => props.width || '60%'};
 max-width: ${props => props.theme.layout[props.type]};
 height: 100%;
 flex: 1;
@@ -180,4 +180,11 @@ export const Paginator = styled.div`
   > ul {
     margin:0;
   } 
+`
+export const Button = styled.button`
+  padding:${props => props.padding || '0.5em 1em'};
+  border-radius:${props => props.radius || '10px'};
+  background:#3e5fbc;
+  color:${props => props.theme.colors.white.base};
+  border:none;
 `
