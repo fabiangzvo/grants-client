@@ -28,7 +28,7 @@ const Form = ({ grant, close, isOpen, update }) => {
       tiawardCeilingtle,
       awardFloor
     }
-    const res = await fetch(`http://localhost:5000/api/grants/${grant.id}`,
+    const res = await fetch(`https://grants-licimatic.herokuapp.com/api/grants/${grant.id}`,
       {
         method: 'PUT',
         headers: {

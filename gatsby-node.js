@@ -7,7 +7,7 @@ exports.sourceNodes = async ({
   createContentDigest,
 }) => {
   // get data
-  const result = await fetch(`http://localhost:5000/api/grants`)
+  const result = await fetch(`https://grants-licimatic.herokuapp.com/api/grants/`)
   const { data, size } = await result.json()
 
   data.map((grant) => {
