@@ -3,7 +3,7 @@ import { RcPagination } from "./style";
 
 const Pagination = ({ next, prev, change }) => {
   return (
-    <RcPagination defaultpagesize={20} onChange={change} total={1000} jumnexticon={next} jumprevicon={prev} />
+    <RcPagination onChange={change} total={500} jumnexticon={next} jumprevicon={prev} />
   )
 }
 

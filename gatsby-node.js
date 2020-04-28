@@ -9,8 +9,10 @@ exports.sourceNodes = async ({
   // get data
   const result = await fetch(`https://grants-licimatic.herokuapp.com/api/grants/`)
   const { data, size } = await result.json()
+  //sort response      
+  const grants = data.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
 
-  data.map((grant) => {
+  grants.map((grant) => {
     const grantNode = {
       // Required fields
       id: grant._id,
